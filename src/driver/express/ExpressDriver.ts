@@ -157,7 +157,8 @@ export class ExpressDriver extends BaseDriver {
             // The following line skips action processing when the request method does not match the action method.
             if (request.method.toLowerCase() !== actionMetadata.type)
                 return next();
-
+            if (request.__driverExecuted) return next();
+                request.__driverExecuted = true;
             return executeCallback({request, response, next});
         };
 
